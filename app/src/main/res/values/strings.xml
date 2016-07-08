@@ -6,4 +6,5 @@
     <string name="login_btn">登 录</string>
     <string name="boy">Boy</string>
     <string name="gril">Gril</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
