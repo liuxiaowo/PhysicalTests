@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.physicaltests.MainActivity">
 
-    
+    <!--google底部导航栏-->
+    <com.ashokvarma.bottomnavigation.BottomNavigationBar
+        android:layout_alignParentBottom="true"
+        android:id="@+id/Tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

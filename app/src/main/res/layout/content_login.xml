@@ -86,7 +86,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:background="#5b9bd4"
+        android:background="@color/btn_color"
         android:text="@string/login_btn"
         android:textColor="#ffffff"
         android:textSize="18sp"

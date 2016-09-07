@@ -65,26 +65,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }else {
                     SqliteOpenHelper fdb = new SqliteOpenHelper(getApplicationContext());
                     SQLiteDatabase db = fdb.getWritableDatabase();
-                    String sql,user_name = null;
-                    sql="select * from user";
-                    Cursor c=db.rawQuery(sql, null);
-                    if(c.getCount()!=0){
-                        for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
-                            user_name=c.getString(c.getColumnIndex("name"));
+                    String sql, user_name = null;
+                    sql = "select * from user";
+                    Cursor c = db.rawQuery(sql, null);
+                    if (c.getCount() != 0) {
+                        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                            user_name = c.getString(c.getColumnIndex("name"));
                         }
                     }
-                    if(user_name.equals(name.getText().toString())){
-                        loginSuccess();
+                    if (user_name != null) {
+                        if (user_name.equals(name.getText().toString())) {
+                            loginSuccess();
+                        }else{
+                            ContentValues cv = new ContentValues();
+                            cv.put("name", name.getText().toString());
+                            cv.put("sex", sex_content);
+                            cv.put("age", age.getText().toString());
+                            db.insert("user", null, cv);
+                            db.close();
+                            loginSuccess();
+                        }
                     }else{
                         ContentValues cv = new ContentValues();
                         cv.put("name", name.getText().toString());
                         cv.put("sex", sex_content);
                         cv.put("age", age.getText().toString());
                         db.insert("user", null, cv);
+                        db.close();
                         loginSuccess();
-                    }
-                    db.close();
                 }
+
+            }
                 break;
         }
     }
