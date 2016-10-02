@@ -19,11 +19,20 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         //底部导航栏
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.Tab);
-        bottomNavigationBar .addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp,"Home"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_location_on_white_24dp, "Location"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_music_note_white_24dp,"Music"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_tv_white_24dp,"Movies & TV"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_favorite_white_24dp,"Favorite"))
+        //设置颜色（选中/未选中/背景颜色）
+        bottomNavigationBar
+                .setActiveColor(R.color.btn_color)
+                .setInActiveColor("#EBE9ED")
+                .setBarBackgroundColor("#FFFFFF");
+        //设置导航栏背景模式
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
+        //背景颜色
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
+        //静态工厂构造方法
+        bottomNavigationBar .addItem(new BottomNavigationItem(R.mipmap.test,"测试"))
+                .addItem(new BottomNavigationItem(R.mipmap.check, "考核"))
+                .addItem(new BottomNavigationItem(R.mipmap.timer,"计时"))
+                .addItem(new BottomNavigationItem(R.mipmap.standard,"标准"))
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
