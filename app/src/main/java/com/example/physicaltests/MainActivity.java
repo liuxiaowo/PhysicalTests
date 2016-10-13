@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements  BottomNavigation
         //设置颜色（选中/未选中/背景颜色）
         bottomNavigationBar
                 .setActiveColor(R.color.btn_color)
-                .setInActiveColor("#EBE9ED")
+                .setInActiveColor("#E2E0E9")
                 .setBarBackgroundColor("#FFFFFF");
         //设置导航栏背景模式
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
