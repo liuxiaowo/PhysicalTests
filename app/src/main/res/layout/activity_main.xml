@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.physicaltests.MainActivity">
-
+    <!--中间内容-->
+    <FrameLayout
+        android:id="@+id/layFrame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
     <!--google底部导航栏-->
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
-        android:layout_alignParentBottom="true"
-        android:id="@+id/Tab"
+        android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+</LinearLayout>
