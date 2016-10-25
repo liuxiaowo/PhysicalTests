@@ -6,10 +6,45 @@
     android:background="#FFFFFF">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/test"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TestFragment" />
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_title"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="50dp"
+        android:background="#f4f1f1"/>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:useDefaultMargins="true"
+        android:layout_marginTop="51dp"
+        android:background="@android:color/white"
+        android:rowCount="2"
+        android:columnCount="2">
+        <Button android:layout_column="0"
+            android:layout_row="0"
+            android:text="Left Button"
+            android:layout_gravity="fill_horizontal|center_vertical"/>
+        <Button android:layout_column="1"
+            android:layout_row="0"
+            android:text="Right Button"
+            android:layout_gravity="fill_horizontal|center_vertical"/>
+        <Button android:layout_column="1"
+            android:layout_row="1"
+            android:text="Right Button 2"
+            android:layout_gravity="fill_horizontal|center_vertical"/>
+    </GridLayout>
 
 </FrameLayout>

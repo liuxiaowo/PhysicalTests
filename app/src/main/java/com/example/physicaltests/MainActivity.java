@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity implements  BottomNavigation
     private void init(){
         //底部导航栏
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
-        //设置颜色（选中/未选中/背景颜色）
+        //设置颜色（选中/未选中/背景颜色）E2E0E9
         bottomNavigationBar
                 .setActiveColor(R.color.btn_color)
-                .setInActiveColor("#E2E0E9")
+                .setInActiveColor("#c5c5c5")
                 .setBarBackgroundColor("#FFFFFF");
         //设置导航栏背景模式
-        bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         //背景颜色
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         //静态工厂构造方法
