@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     card:cardBackgroundColor="@android:color/white"
-    card:cardCornerRadius="10dp"
+    card:cardCornerRadius="50dp"
     card:cardElevation="2dp"
     card:cardMaxElevation="@dimen/cardview_default_elevation"
-    android:layout_margin="30px">
+    android:layout_margin="10dp">
 
     <RelativeLayout
         android:id="@+id/list_item"
@@ -18,10 +18,9 @@
 
         <ImageView
             android:id="@+id/image_item"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@mipmap/test"
             />
 
         <TextView

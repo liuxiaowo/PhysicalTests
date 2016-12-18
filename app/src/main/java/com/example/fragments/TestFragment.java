@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class TestFragment extends Fragment {
     private TestAdapter mAdapter;
     private List<String> mDatas;
     private List<Integer> mColors;
+    private int []mImgs = {R.drawable.shape,R.drawable.push_up,R.drawable.sit_up,R.drawable.shuttle_run,R.drawable.running};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,11 +52,11 @@ public class TestFragment extends Fragment {
         mDatas.add("10*5往返跑");
         mDatas.add("跑步");
         mColors = new ArrayList<Integer>();
-        mColors.add(R.color.blue);
-        mColors.add(R.color.brown);
-        mColors.add(R.color.orange);
-        mColors.add(R.color.btn_color);
         mColors.add(R.color.colorAccent);
+        mColors.add(R.color.blue);
+        mColors.add(R.color.purple);
+        mColors.add(R.color.green);
+        mColors.add(R.color.orange);
     }
 
     class TestAdapter extends RecyclerView.Adapter<TestAdapter.MyViewHolder>
@@ -79,6 +81,7 @@ public class TestFragment extends Fragment {
             int width = wm.getDefaultDisplay().getWidth();
             int item_width= (width-30*6)/3;
             holder.list_item.setMinimumHeight(item_width);
+            holder.img.setBackgroundResource(mImgs[position]);
         }
 
         @Override
@@ -92,14 +95,14 @@ public class TestFragment extends Fragment {
 
             TextView tv;
             RelativeLayout list_item;
+            ImageView img;
 
             public MyViewHolder(View view)
             {
                 super(view);
                 tv = (TextView) view.findViewById(R.id.id_num);
                 list_item = (RelativeLayout) view.findViewById(R.id.list_item);
-
-
+                img = (ImageView)view.findViewById(R.id.image_item);
             }
         }
     }
