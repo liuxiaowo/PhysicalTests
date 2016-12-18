@@ -9,20 +9,20 @@ import com.example.physicaltests.R;
 
 public class ShuttleRunActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ImageButton back_shape;
+    private ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shape);
+        setContentView(R.layout.activity_shuttle_run);
         //返回按钮
-        back_shape = (ImageButton)findViewById(R.id.back_shape);
-        back_shape.setOnClickListener(this);
+        back = (ImageButton)findViewById(R.id.back_shuttle_run);
+        back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.back_shape:
+            case R.id.back_shuttle_run:
                 finish();
                 break;
         }

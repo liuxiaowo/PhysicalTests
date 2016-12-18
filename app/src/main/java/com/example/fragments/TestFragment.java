@@ -84,12 +84,12 @@ public class TestFragment extends Fragment implements MyItemClickListener {
                 Intent intent3 = new Intent(getActivity(), SitUpActivity.class);
                 startActivity(intent3);
                 break;
-            case 4:
+            case 3:
                 //go to 10*5往返跑测试页面
                 Intent intent4 = new Intent(getActivity(), ShuttleRunActivity.class);
                 startActivity(intent4);
                 break;
-            case 5:
+            case 4:
                 //go to 跑步测试页面
                 Intent intent5 = new Intent(getActivity(), RunningActivity.class);
                 startActivity(intent5);
