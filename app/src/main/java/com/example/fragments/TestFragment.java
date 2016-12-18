@@ -15,7 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.physicaltests.R;
+import com.example.test.activity.PushUpActivity;
+import com.example.test.activity.RunningActivity;
 import com.example.test.activity.ShapeActivity;
+import com.example.test.activity.ShuttleRunActivity;
+import com.example.test.activity.SitUpActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +73,26 @@ public class TestFragment extends Fragment implements MyItemClickListener {
                 //go to 体型测试页面
                 Intent intent = new Intent(getActivity(), ShapeActivity.class);
                 startActivity(intent);
+                break;
+            case 1:
+                //go to 俯卧撑测试页面
+                Intent intent2 = new Intent(getActivity(), PushUpActivity.class);
+                startActivity(intent2);
+                break;
+            case 2:
+                //go to 仰卧起坐测试页面
+                Intent intent3 = new Intent(getActivity(), SitUpActivity.class);
+                startActivity(intent3);
+                break;
+            case 4:
+                //go to 10*5往返跑测试页面
+                Intent intent4 = new Intent(getActivity(), ShuttleRunActivity.class);
+                startActivity(intent4);
+                break;
+            case 5:
+                //go to 跑步测试页面
+                Intent intent5 = new Intent(getActivity(), RunningActivity.class);
+                startActivity(intent5);
                 break;
         }
     }

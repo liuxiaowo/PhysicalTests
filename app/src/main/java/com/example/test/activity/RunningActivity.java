@@ -7,22 +7,22 @@ import android.widget.ImageButton;
 
 import com.example.physicaltests.R;
 
-public class ShapeActivity extends AppCompatActivity implements View.OnClickListener{
+public class RunningActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shape);
+        setContentView(R.layout.activity_running);
         //返回按钮
-        back = (ImageButton)findViewById(R.id.back_shape);
+        back = (ImageButton)findViewById(R.id.back_running);
         back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.back_shape:
+            case R.id.back_running:
                 finish();
                 break;
         }
