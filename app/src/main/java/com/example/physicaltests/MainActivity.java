@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements  BottomNavigation
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         //静态工厂构造方法
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.test, "测试").setActiveColorResource(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.check, "考核").setActiveColorResource(R.color.teal))
+                .addItem(new BottomNavigationItem(R.mipmap.check, "考核").setActiveColorResource(R.color.colorAccent))
                 .addItem(new BottomNavigationItem(R.mipmap.timer, "计时").setActiveColorResource(R.color.blue))
                 .addItem(new BottomNavigationItem(R.mipmap.standard, "标准").setActiveColorResource(R.color.brown))
                 .setFirstSelectedPosition(0)
