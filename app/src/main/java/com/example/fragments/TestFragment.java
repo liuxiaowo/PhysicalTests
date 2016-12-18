@@ -1,5 +1,6 @@
 package com.example.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.physicaltests.R;
+import com.example.test.activity.ShapeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 /**
  * 体能测试
  */
-public class TestFragment extends Fragment {
+public class TestFragment extends Fragment implements MyItemClickListener {
     private RecyclerView recycler_view;
     private TestAdapter mAdapter;
     private List<String> mDatas;
@@ -35,6 +37,7 @@ public class TestFragment extends Fragment {
         initData();
         recycler_view.setLayoutManager(new GridLayoutManager(getActivity(),3));
         recycler_view.setAdapter(mAdapter = new TestAdapter());
+        mAdapter.setOnItemClickListener(this);
         return view;
     }
 
@@ -59,15 +62,27 @@ public class TestFragment extends Fragment {
         mColors.add(R.color.orange);
     }
 
+    @Override
+    public void onItemClick(View view, int postion) {
+        switch (postion){
+            case 0:
+                //go to 体型测试页面
+                Intent intent = new Intent(getActivity(), ShapeActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
     class TestAdapter extends RecyclerView.Adapter<TestAdapter.MyViewHolder>
     {
+        private MyItemClickListener mListener;
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(
                     getActivity()).inflate(R.layout.recyclerview_item, parent,
-                    false));
+                    false);
+            MyViewHolder holder = new MyViewHolder(v,mListener);
             return holder;
         }
 
@@ -90,22 +105,44 @@ public class TestFragment extends Fragment {
             return mDatas.size();
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder
+        /**
+         * 设置Item点击监听
+         * @param listener
+         */
+        public void setOnItemClickListener(MyItemClickListener listener){
+            this.mListener = listener;
+        }
+
+
+        class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         {
 
-            TextView tv;
-            RelativeLayout list_item;
-            ImageView img;
+            private TextView tv;
+            private RelativeLayout list_item;
+            private ImageView img;
+            private MyItemClickListener mListener;
 
-            public MyViewHolder(View view)
+            public MyViewHolder(View view,MyItemClickListener listener)
             {
                 super(view);
                 tv = (TextView) view.findViewById(R.id.id_num);
                 list_item = (RelativeLayout) view.findViewById(R.id.list_item);
                 img = (ImageView)view.findViewById(R.id.image_item);
+                this.mListener = listener;
+                view.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                if(mListener != null){
+                    mListener.onItemClick(v,getPosition());
+                }
             }
         }
     }
 
-
+}
+//为RecyclerView添加onItemClick事件
+interface MyItemClickListener {
+    void onItemClick(View view,int postion);
 }
