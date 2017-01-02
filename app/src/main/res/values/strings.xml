@@ -19,4 +19,7 @@
     <string name="sit_up_title">仰卧起坐</string>
     <string name="shuttle_run_title">10*5往返跑</string>
     <string name="running_title">跑步</string>
+
+    <!--体型测试界面-->
+    <string name="height">身高:</string>
 </resources>

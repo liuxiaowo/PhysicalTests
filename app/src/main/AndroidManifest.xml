@@ -21,19 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--登录-->
+        <!-- 登录 -->
         <activity android:name=".LoginActivity" />
-        <!--体型测试-->
-        <activity android:name="com.example.test.activity.ShapeActivity"></activity>
-        <!--俯卧撑测试-->
-        <activity android:name="com.example.test.activity.PushUpActivity"></activity>
-        <!--仰卧体坐测试-->
-        <activity android:name="com.example.test.activity.SitUpActivity"></activity>
-        <!--10*5往返跑测试-->
-        <activity android:name="com.example.test.activity.ShuttleRunActivity"></activity>
-        <!--跑步测试-->
-        <activity android:name="com.example.test.activity.RunningActivity"></activity>
-
+        <!-- 体型测试 -->
+        <activity android:name="com.example.test.activity.ShapeActivity" />
+        <!-- 俯卧撑测试 -->
+        <activity android:name="com.example.test.activity.PushUpActivity" />
+        <!-- 仰卧体坐测试 -->
+        <activity android:name="com.example.test.activity.SitUpActivity" />
+        <!-- 10*5往返跑测试 -->
+        <activity android:name="com.example.test.activity.ShuttleRunActivity" />
+        <!-- 跑步测试 -->
+        <activity android:name="com.example.test.activity.RunningActivity" />
     </application>
 
 </manifest>
