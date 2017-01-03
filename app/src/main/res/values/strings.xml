@@ -21,5 +21,6 @@
     <string name="running_title">跑步</string>
 
     <!--体型测试界面-->
+    <string name="seekbar_label">-->滑动</string>
 
 </resources>

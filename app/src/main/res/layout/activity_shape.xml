@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.test.activity.ShapeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,6 +47,8 @@
             android:layout_height="wrap_content"
             android:textSize="16sp" />
     </LinearLayout>
-    <include layout="@layout/content_ruler" />
+    <include layout="@layout/shape_ruler" />
+    <!--体重秤-->
+    <include layout="@layout/shape_gauge_chart"/>
 
 </LinearLayout>

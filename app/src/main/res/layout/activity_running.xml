@@ -4,7 +4,8 @@
     android:id="@+id/activity_running"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.test.activity.RunningActivity">
+    tools:context="com.example.test.activity.RunningActivity"
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -4,7 +4,8 @@
     android:id="@+id/activity_push_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.test.activity.PushUpActivity">
+    tools:context="com.example.test.activity.PushUpActivity"
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:layout_width="match_parent"

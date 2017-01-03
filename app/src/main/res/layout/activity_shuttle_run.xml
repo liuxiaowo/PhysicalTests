@@ -4,7 +4,8 @@
     android:id="@+id/activity_shuttle_run"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.test.activity.ShuttleRunActivity">
+    tools:context="com.example.test.activity.ShuttleRunActivity"
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:layout_width="match_parent"
