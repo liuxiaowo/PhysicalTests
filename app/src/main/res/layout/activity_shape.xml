@@ -17,6 +17,7 @@
             android:id="@+id/back_shape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/back_accent" />
         <TextView
             android:layout_width="match_parent"
@@ -26,6 +27,13 @@
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
             />
+        <ImageButton
+            android:id="@+id/save_shape"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/save_accent" />
     </RelativeLayout>
     <View
         android:id="@+id/line_shape"
@@ -50,5 +58,6 @@
     <include layout="@layout/shape_ruler" />
     <!--体重秤-->
     <include layout="@layout/shape_gauge_chart"/>
+
 
 </LinearLayout>
