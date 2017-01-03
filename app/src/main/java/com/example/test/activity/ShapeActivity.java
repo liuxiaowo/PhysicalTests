@@ -6,10 +6,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.physicaltests.R;
 import com.example.view.GaugeChart01View;
 import com.example.view.RulerView;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class ShapeActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -22,15 +26,17 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
     private TextView  process = null;
     private SeekBar seekBar = null;
     //当前身高
-    private int height;
+    private double height = 1.6;
     //当前体重
-    private double weight;
+    private double weight = 50.0;
     //当前体质指数
     private double KBI;
     //体型测试结果
     private String result;
-
-
+    //结果按钮
+    private ImageButton result_btn;
+    //保留1位小数
+    private DecimalFormat df  = new DecimalFormat("#.0");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,21 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
             case R.id.back_shape:
                 finish();
                 break;
+            case R.id.result_shape:
+                KBI =  div(weight,height*height,2);
+                if(KBI>=18.5&&KBI<=23.9){
+                    result = "体型合格";
+                }else if(KBI>=24.0&&KBI<=27.9){
+                    result = "超重";
+                }else if(KBI>=28.0){
+                    result = "肥胖";
+                }else if(KBI<18.5&&KBI>=12.0){
+                    result = "偏瘦";
+                }else{
+                    result = "消瘦";
+                }
+                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
@@ -60,6 +81,8 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
         chart = (GaugeChart01View)findViewById(R.id.chart_view);
         process = (TextView)findViewById(R.id.tv_process);
         seekBar = (SeekBar) this.findViewById(R.id.seekBar1);
+        //结果按钮
+        result_btn = (ImageButton) findViewById(R.id.result_shape);
 
         //标尺带有文字
         rulerView.isWithText();
@@ -80,11 +103,12 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
 
 
         back.setOnClickListener(this);
+        result_btn.setOnClickListener(this);
         rulerView.setOnScaleListener(new RulerView.OnScaleListener() {
             @Override
             public void onScaleChanged(int scale) {
-                heightView.setText("您的身高为:"+scale+"cm");
-                height = scale;
+                heightView.setText("您的身高为:"+div(scale,100,2)+"m");
+                height = div(scale,100,2);
             }
         });
 
@@ -100,12 +124,29 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
                                           boolean fromUser) {
                 //1.5 = 180/120
                 double progress_s = progress/1.5;
-                process.setText("您的体重为:"+Double.toString(progress_s)+"kg");
+                process.setText("您的体重为:"+df.format(progress_s)+"kg");
                 weight = progress_s;
                 chart.setAngle(progress);
                 chart.chartRender();
                 chart.invalidate();
             }
         });
+    }
+    /**
+     * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指
+     * 定精度，以后的数字四舍五入。
+     * @param v1 被除数
+     * @param v2 除数
+     * @param scale 表示表示需要精确到小数点以后几位。
+     * @return 两个参数的商
+     */
+    public static double div(double v1, double v2, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException(
+                    "The scale must be a positive integer or zero");
+        }
+        BigDecimal b1 = new BigDecimal(Double.toString(v1));
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));
+        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }
