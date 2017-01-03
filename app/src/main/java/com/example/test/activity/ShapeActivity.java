@@ -79,7 +79,9 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                process.setText(Integer.toString(progress));
+                //1.5 = 180/120
+                double progress_s = progress/1.5;
+                process.setText("您的身高为:"+Integer.toString((int) progress_s)+"kg");
                 chart.setAngle(progress);
                 chart.chartRender();
                 chart.invalidate();

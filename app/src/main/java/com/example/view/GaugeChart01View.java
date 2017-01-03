@@ -69,7 +69,7 @@ public class GaugeChart01View  extends GraphicalView {
 	 private void initView()
 	 {
 		chartLabels();
-		chartDataSet();	
+		chartDataSet();
 		chartRender();
 	 }
 	 
@@ -104,7 +104,7 @@ public class GaugeChart01View  extends GraphicalView {
 			//chart.setTitle("刻度盘 ");
 								
 			//刻度步长
-			chart.setTickSteps(10d);
+			chart.setTickSteps(12d);
 			
 			//标签(标签和步长分开，步长即刻度可以密点，标签可以松点)					
 			chart.setCategories(mLabels);					
@@ -124,10 +124,12 @@ public class GaugeChart01View  extends GraphicalView {
 		
 	}
 	
-	//分区[角度(0-mStartAngle)，颜色]		
+	//分区[角度(0-mStartAngle)，颜色]
 	private void chartDataSet()
 	{
-		int Angle = 180/3;
+		int Angle = 180/5;
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(224, 62, 54)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(247, 156, 27)));
 		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(73, 172, 72)));
 		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(247, 156, 27)));
 		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(224, 62, 54)));
@@ -135,12 +137,10 @@ public class GaugeChart01View  extends GraphicalView {
 	
 	private void chartLabels()
 	{
-		//标签		
-		mLabels.add("起始");
-		mLabels.add("安全");
-		mLabels.add("警惕");
-		mLabels.add("危险");
-		mLabels.add("终止");
+		for(int i = 0;i<=12;i++){
+			//标签
+			mLabels.add(i*10+"kg");
+		}
 	}
 
 	
@@ -153,4 +153,6 @@ public class GaugeChart01View  extends GraphicalView {
         	Log.e(TAG, e.toString());
         }
     }
+
+
 }
