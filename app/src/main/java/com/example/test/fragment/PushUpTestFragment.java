@@ -34,6 +34,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.back_push_up_test:
+                getActivity().finish();
                 break;
         }
     }
