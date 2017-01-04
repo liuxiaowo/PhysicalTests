@@ -15,7 +15,7 @@
     <string name="standard_title">测试标准</string>
 
     <string name="shape_title">体型</string>
-    <string name="push_up_title">俯卧撑</string>
+    <string name="push_up_title_test">俯卧撑-自测</string>
     <string name="sit_up_title">仰卧起坐</string>
     <string name="shuttle_run_title">10*5往返跑</string>
     <string name="running_title">跑步</string>

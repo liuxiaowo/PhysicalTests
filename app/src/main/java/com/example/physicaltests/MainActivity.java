@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements  BottomNavigation
         setDefaultFragment();
         //导航栏选择监听
         bottomNavigationBar.setTabSelectedListener(this);
-
     }
 
     /** * 设置默认的 */

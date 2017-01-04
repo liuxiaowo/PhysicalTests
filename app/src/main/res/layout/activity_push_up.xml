@@ -4,43 +4,93 @@
     android:id="@+id/activity_push_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.test.activity.PushUpActivity"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context="com.example.test.activity.PushUpActivity">
+
+    <!--中间内容-->
+    <FrameLayout
+        android:id="@+id/push_up_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:visibility="gone">
+
         <ImageButton
             android:id="@+id/back_push_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:background="@drawable/back_blue" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/push_up_title"
             android:gravity="center"
+            android:text="@string/push_up_title_test"
             android:textColor="@color/blue"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
+
         <ImageButton
             android:id="@+id/save_push_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
-            android:background="@drawable/save_blue" />
+            android:background="@drawable/save_blue"
+            android:visibility="gone"/>
     </RelativeLayout>
+
     <View
         android:id="@+id/line_push_up"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="50dp"
-        android:background="#f4f1f1"/>
+        android:background="#f4f1f1" />
+    <!--底部按钮栏-->
+    <ImageButton
+        android:id="@+id/add_push_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/add_push_up" />
 
+    <ImageButton
+        android:id="@+id/test_push_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="55dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/add_push_up"
+        android:background="@drawable/test_push_up"
+        android:visibility="gone"/>
 
+    <ImageButton
+        android:id="@+id/check_push_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/add_push_up"
+        android:layout_toLeftOf="@id/add_push_up"
+        android:background="@drawable/check_push_up"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/exercise_push_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/add_push_up"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/exercise_push_up"
+        android:visibility="gone"/>
 
 </RelativeLayout>
