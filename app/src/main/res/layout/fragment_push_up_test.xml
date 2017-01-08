@@ -30,14 +30,14 @@
                 android:text="@string/push_up_title_test"
                 android:textColor="@color/blue"
                 android:textSize="20sp" />
-
+            <!--倒计时重置-->
             <ImageButton
                 android:id="@+id/push_up_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/push_up_start" />
+                android:background="@drawable/push_up_reset" />
         </RelativeLayout>
 
         <View
@@ -53,12 +53,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_below="@id/line_push_up_test">
-
-            <TextView
+            <!--倒计时-->
+            <com.example.test.view.Chronometer01
                 android:id="@+id/push_up_test_timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2:00"
                 android:textSize="50sp"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="20dp"/>
