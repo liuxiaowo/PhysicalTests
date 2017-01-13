@@ -53,6 +53,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
         back.setOnClickListener(this);
         start.setOnClickListener(this);
         timer.initTime(2*60);
+        timer.reStart();
         //count
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -63,7 +64,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
             @Override
             public void onTimeComplete()
             {
-                Toast.makeText(getContext(), "自测结束!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "自测结束,恭喜您做了"+count+"个俯卧撑", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
@@ -85,6 +86,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
             case R.id.push_up_start:
                 timer.reStart();
                 count = 0;
+                countView.setText(count+"");
                 break;
         }
     }
