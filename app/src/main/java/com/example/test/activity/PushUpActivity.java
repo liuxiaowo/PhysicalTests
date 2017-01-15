@@ -123,6 +123,7 @@ public class PushUpActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 }
                 break;
+            //考核
             case R.id.check_push_up:
                 if (isVisible) {
                     if (fragments != null) {
@@ -142,10 +143,11 @@ public class PushUpActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 }
                 break;
+            //练习
             case R.id.exercise_push_up:
                 if (isVisible) {
                     if (fragments != null) {
-                        //添加测试
+                        //添加练习
                         FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(2);

@@ -40,6 +40,8 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
     //数字
     private int count = 0;
 
+    private boolean isCompleted = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
             @Override
             public void onTimeComplete()
             {
-                Toast.makeText(getContext(), "自测结束,恭喜您做了"+count+"个俯卧撑", Toast.LENGTH_SHORT).show();
+                isCompleted = true;
             }
         });
         return view;
@@ -87,6 +89,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
                 timer.reStart();
                 count = 0;
                 countView.setText(count+"");
+                isCompleted = false;
                 break;
         }
     }
@@ -142,4 +145,15 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
         }
 
     };
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            //自测fragment显示同时自测结束后的提示框（避免在其他fragment弹出该土司）
+            if(isCompleted){
+                Toast.makeText(getContext(), "自测结束,恭喜您做了"+count+"个俯卧撑", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
