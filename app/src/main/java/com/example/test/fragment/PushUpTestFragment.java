@@ -64,10 +64,7 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
             @Override
             public void onTimeComplete()
             {
-                //判断当前fragment是否显示(避免其他fragment显示出该提示)
-                if(getUserVisibleHint()) {
-                    Toast.makeText(getContext(), "自测结束,恭喜您做了" + count + "个俯卧撑", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getContext(), "自测结束,恭喜您做了" + count + "个俯卧撑", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
