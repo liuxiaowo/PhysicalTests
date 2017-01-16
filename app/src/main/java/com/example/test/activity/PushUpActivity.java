@@ -33,6 +33,8 @@ public class PushUpActivity extends AppCompatActivity implements View.OnClickLis
     //页面切换
     private ArrayList<Fragment> fragments;
 
+    public static int isWhoFragment = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +122,7 @@ public class PushUpActivity extends AppCompatActivity implements View.OnClickLis
                         ft.remove(fragments.get(1));
                         ft.remove(fragments.get(2));
                         ft.commitAllowingStateLoss();
+                        isWhoFragment = 1;
                     }
                 }
                 break;
@@ -140,6 +143,7 @@ public class PushUpActivity extends AppCompatActivity implements View.OnClickLis
                         ft.remove(fragments.get(0));
                         ft.remove(fragments.get(2));
                         ft.commitAllowingStateLoss();
+                        isWhoFragment = 2;
                     }
                 }
                 break;
@@ -160,6 +164,7 @@ public class PushUpActivity extends AppCompatActivity implements View.OnClickLis
                         ft.remove(fragments.get(1));
                         ft.remove(fragments.get(0));
                         ft.commitAllowingStateLoss();
+                        isWhoFragment = 3;
                     }
                 }
                 break;

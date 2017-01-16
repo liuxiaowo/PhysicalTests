@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.physicaltests.R;
+import com.example.test.activity.PushUpActivity;
 import com.example.test.view.Chronometer01;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -64,7 +65,9 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
             @Override
             public void onTimeComplete()
             {
-                Toast.makeText(getContext(), "自测结束,恭喜您做了" + count + "个俯卧撑", Toast.LENGTH_SHORT).show();
+                if(PushUpActivity.isWhoFragment==1) {
+                    Toast.makeText(getContext(), "自测结束,恭喜您做了" + count + "个俯卧撑", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
