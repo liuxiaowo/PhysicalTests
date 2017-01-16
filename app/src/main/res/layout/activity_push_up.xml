@@ -12,45 +12,7 @@
         android:id="@+id/push_up_framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/back_push_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/back_blue" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/push_up_title_test"
-            android:textColor="@color/blue"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/save_push_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/save_blue"
-            android:visibility="gone"/>
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/line_push_up"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="50dp"
-        android:background="#f4f1f1" />
+    
     <!--底部按钮栏-->
     <ImageButton
         android:id="@+id/add_push_up"
