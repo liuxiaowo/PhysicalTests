@@ -22,6 +22,9 @@
     <string name="shuttle_run_title">10*5往返跑</string>
     <string name="running_title">跑步</string>
 
-    <!--体型测试界面-->
+    <!--俯卧撑自测界面-->
+    <string name="push_up_test_prompt">请将手机平放在地上,点击右上角按钮开始</string>
+    <!--俯卧撑练习界面-->
+    <string name="push_up_ex_prompt">请将手机绑在上臂外侧,点击右上角按钮开始</string>
 
 </resources>

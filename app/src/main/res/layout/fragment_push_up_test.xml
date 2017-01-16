@@ -53,6 +53,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_below="@id/line_push_up_test">
+            <TextView
+                android:id="@+id/push_up_test_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/push_up_test_prompt"
+                android:layout_gravity="center_horizontal"
+                />
             <!--倒计时-->
             <com.example.test.view.Chronometer01
                 android:id="@+id/push_up_test_timer"

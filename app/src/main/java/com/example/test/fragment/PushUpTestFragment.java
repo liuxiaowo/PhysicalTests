@@ -54,7 +54,6 @@ public class PushUpTestFragment extends Fragment implements View.OnClickListener
         back.setOnClickListener(this);
         start.setOnClickListener(this);
         timer.initTime(2*60);
-        timer.reStart();
         //count
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
