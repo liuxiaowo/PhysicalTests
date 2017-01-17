@@ -22,7 +22,7 @@ import com.example.test.view.Chronometer01;
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
- *俯卧撑-考核
+ *仰卧起坐-考核
  */
 public class SitUpCheckFragment extends Fragment implements View.OnClickListener{
     //返回按钮

@@ -19,7 +19,7 @@ import com.example.physicaltests.R;
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
- *俯卧撑-练习
+ *仰卧起坐-练习
  */
 public class SitUpExerciseFragment extends Fragment implements View.OnClickListener{
     //返回按钮

@@ -89,10 +89,10 @@
                     android:id="@+id/sit_up_check_orientation_sensor"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:background="@drawable/cricle_shape"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/red"
+                    android:background="@drawable/sit_up_cricle_shape"
                     android:textSize="80sp" />
             </LinearLayout>
         </LinearLayout>
