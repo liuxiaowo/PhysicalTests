@@ -91,7 +91,7 @@
                     android:layout_height="200dp"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/red"
+                    android:textColor="@color/colorAccent"
                     android:background="@drawable/sit_up_cricle_shape"
                     android:textSize="80sp" />
             </LinearLayout>
