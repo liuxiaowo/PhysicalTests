@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.physicaltests.R;
-import com.example.test.activity.PushUpActivity;
+import com.example.test.activity.SitUpActivity;
 import com.example.test.view.Chronometer01;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -44,27 +44,27 @@ public class SitUpTestFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_push_up_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_sit_up_test, container, false);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //back btn
         back = (ImageButton)view.findViewById(R.id.back_push_up_test);
         //timer
-        timer = (Chronometer01)view.findViewById(R.id.push_up_test_timer);
-        start = (ImageButton)view.findViewById(R.id.push_up_start);
+        timer = (Chronometer01)view.findViewById(R.id.sit_up_test_timer);
+        start = (ImageButton)view.findViewById(R.id.sit_up_reset);
         back.setOnClickListener(this);
         start.setOnClickListener(this);
         timer.initTime(2*60);
         //count
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        countView = (TextView)view.findViewById(R.id.push_up_test_count);
+        countView = (TextView)view.findViewById(R.id.sit_up_test_count);
 
         timer.setOnTimeCompleteListener(new Chronometer01.OnTimeCompleteListener()
         {
             @Override
             public void onTimeComplete()
             {
-                if(PushUpActivity.isWhoFragment==1) {
+                if(SitUpActivity.isWhoFragment==1) {
                     Toast.makeText(getContext(), "自测结束,恭喜您做了" + count + "个俯卧撑", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -85,7 +85,7 @@ public class SitUpTestFragment extends Fragment implements View.OnClickListener{
                 getActivity().finish();
                 break;
             //倒计时重置按钮
-            case R.id.push_up_start:
+            case R.id.sit_up_reset:
                 timer.reStart();
                 count = 0;
                 countView.setText(count+"");

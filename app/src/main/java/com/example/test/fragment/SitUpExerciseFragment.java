@@ -37,11 +37,11 @@ public class SitUpExerciseFragment extends Fragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_push_up_exercise, container, false);
-        back = (ImageButton)view.findViewById(R.id.back_push_up_exercise);
-        countView = (TextView)view.findViewById(R.id.push_up_ex_orientation_sensor);
+        View view = inflater.inflate(R.layout.fragment_sit_up_exercise, container, false);
+        back = (ImageButton)view.findViewById(R.id.back_sit_up_exercise);
+        countView = (TextView)view.findViewById(R.id.sit_up_ex_orientation_sensor);
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
-        reset = (ImageButton)view.findViewById(R.id.push_up_ex_reset);
+        reset = (ImageButton)view.findViewById(R.id.sit_up_ex_reset);
         back.setOnClickListener(this);
         reset.setOnClickListener(this);
         return view;
@@ -56,11 +56,11 @@ public class SitUpExerciseFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             //返回
-            case R.id.back_push_up_exercise:
+            case R.id.back_sit_up_exercise:
                 getActivity().finish();
                 break;
             //重置
-            case R.id.push_up_ex_reset:
+            case R.id.sit_up_ex_reset:
                 count = 0;
                 countView.setText(count+"");
                 break;

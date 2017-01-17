@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.physicaltests.R;
-import com.example.test.activity.PushUpActivity;
+import com.example.test.activity.SitUpActivity;
 import com.example.test.view.Chronometer01;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -42,12 +42,12 @@ public class SitUpCheckFragment extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_push_up_check, container, false);
-        back = (ImageButton)view.findViewById(R.id.back_push_up_check);
-        countView = (TextView)view.findViewById(R.id.push_up_check_orientation_sensor);
+        View view = inflater.inflate(R.layout.fragment_sit_up_check, container, false);
+        back = (ImageButton)view.findViewById(R.id.back_sit_up_check);
+        countView = (TextView)view.findViewById(R.id.sit_up_check_orientation_sensor);
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
-        reset = (ImageButton)view.findViewById(R.id.push_up_check_reset);
-        timer = (Chronometer01)view.findViewById(R.id.push_up_check_timer);
+        reset = (ImageButton)view.findViewById(R.id.sit_up_check_reset);
+        timer = (Chronometer01)view.findViewById(R.id.sit_up_check_timer);
         timer.initTime(2*60);
         back.setOnClickListener(this);
         reset.setOnClickListener(this);
@@ -56,7 +56,7 @@ public class SitUpCheckFragment extends Fragment implements View.OnClickListener
             @Override
             public void onTimeComplete()
             {
-                if(PushUpActivity.isWhoFragment==2) {
+                if(SitUpActivity.isWhoFragment==2) {
                     Toast.makeText(getContext(), "考核结束,恭喜您做了" + count + "个俯卧撑", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -73,11 +73,11 @@ public class SitUpCheckFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             //返回
-            case R.id.back_push_up_check:
+            case R.id.back_sit_up_check:
                 getActivity().finish();
                 break;
             //重置
-            case R.id.push_up_check_reset:
+            case R.id.sit_up_check_reset:
                 timer.reStart();
                 count = 0;
                 countView.setText(count+"");

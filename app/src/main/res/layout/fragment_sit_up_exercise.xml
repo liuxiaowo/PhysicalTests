@@ -1,0 +1,87 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.example.test.activity.SitUpActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <!-- TODO: Update blank fragment layout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/back_sit_up_exercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/back_purple" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/sit_up_title_exercise"
+                android:textColor="@color/purple"
+                android:textSize="20sp" />
+            <!--重置-->
+            <ImageButton
+                android:id="@+id/sit_up_ex_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/sit_up_reset" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/line_sit_up_ex"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="50dp"
+            android:background="#f4f1f1" />
+
+        <!--内容-->
+        <LinearLayout
+            android:id="@+id/sit_up_ex_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/line_sit_up_ex"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/sit_up_ex_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/push_up_ex_prompt"
+                android:layout_gravity="center_horizontal"
+                />
+            <!--俯卧撑计数-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="-150dp">
+                <TextView
+                    android:id="@+id/sit_up_ex_orientation_sensor"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:text="0"
+                    android:textSize="80sp"
+                    android:gravity="center"
+                    android:textColor="@color/colorAccent"
+                    android:background="@drawable/cricle_shape"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

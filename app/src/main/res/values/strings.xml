@@ -18,7 +18,9 @@
     <string name="push_up_title_test">俯卧撑-自测</string>
     <string name="push_up_title_check">俯卧撑-考核</string>
     <string name="push_up_title_exercise">俯卧撑-练习</string>
-    <string name="sit_up_title">仰卧起坐</string>
+    <string name="sit_up_title_test">仰卧起坐-自测</string>
+    <string name="sit_up_title_check">仰卧起坐-考核</string>
+    <string name="sit_up_title_exercise">仰卧起坐-练习</string>
     <string name="shuttle_run_title">10*5往返跑</string>
     <string name="running_title">跑步</string>
 
