@@ -32,9 +32,9 @@
     <string name="push_up_check_prompt">请将手机绑在上臂外侧,点击右上角刷新按钮开始</string>
 
     <!--仰卧起坐自测界面-->
-    <string name="sit_up_test_prompt">请用双手抱住手机,点击右上角按钮开始</string>
+    <string name="sit_up_test_prompt">请用双手抱住手机两侧,点击右上角按钮开始</string>
     <!--仰卧起坐练习界面-->
-    <string name="sit_up_ex_prompt">请将手机绑在腹部,点击右上角按钮开始</string>
+    <string name="sit_up_ex_prompt">请将手机横向绑在腹部,点击右上角按钮开始</string>
     <!--仰卧起坐考核界面-->
-    <string name="sit_up_check_prompt">请将手机绑在腹部,点击右上角刷新按钮开始</string>
+    <string name="sit_up_check_prompt">请将手机横向绑在腹部,点击右上角刷新按钮开始</string>
 </resources>

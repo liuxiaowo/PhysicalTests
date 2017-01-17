@@ -70,46 +70,48 @@ public class SitUpExerciseFragment extends Fragment implements View.OnClickListe
     /**
      * 方向传感器监听器
      */
-   class MySensorEventListener implements SensorEventListener {
+    class MySensorEventListener implements SensorEventListener {
 
-        boolean isBend=false,isStraight=false,isStraightAgain=false;
+        boolean isBend = false, isStraight = false, isStraightAgain = false;
+
         @Override
         //可以得到传感器实时测量出来的变化值
         public void onSensorChanged(SensorEvent event) {
             //方向传感器
             if (event.sensor.getType() == Sensor.TYPE_ORIENTATION) {
-                float y = event.values[SensorManager.DATA_Y];
-                if(y>=-100&&y<=-80){
+                float z = event.values[SensorManager.DATA_Z];
+                if ((z <= 0 && z >= -10) || (z >= 0 && z <= 10)) {
                     isStraight = true;
-                    Log.e("directionSensor","直臂");
+                    Log.e("directionSensor", "躺下");
                 }
-                if(y>=-10&&y<=10){
+                //第二次转为45或-45时起作用
+                if ((z >= -90 && z <= -80) || (z >= 80 && z <= 90)) {
                     isBend = true;
-                    Log.e("directionSensor","曲臂");
+                    Log.e("directionSensor", "起来90度");
                 }
-                if(isBend&&y>=-100&&y<=-80){
+                if (isBend && ((z <= 0 && z >= -10) || (z >= 0 && z <= 10))) {
                     isStraightAgain = true;
-                    Log.e("directionSensor","再次直臂");
+                    Log.e("directionSensor", "再次躺下");
                 }
-                //俯卧撑加1
-                if(isStraightAgain){
+                //仰卧起坐加1
+                if (isStraightAgain) {
                     isStraight = isBend = isStraightAgain = false;
                     count++;
-                    countView.setText(count+"");
+                    countView.setText(count + "");
                 }
             }
         }
 
-       @Override
-       public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-       }
-   }
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(sensorManager!=null) {
+        if (sensorManager != null) {
             Sensor sensor_orientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
             sensorManager.registerListener(mySensorEventListener, sensor_orientation, SensorManager.SENSOR_DELAY_UI);
         }
@@ -119,7 +121,7 @@ public class SitUpExerciseFragment extends Fragment implements View.OnClickListe
     public void onPause() {
         super.onPause();
         //注销所有传感器的监听
-        if(mySensorEventListener!=null&&sensorManager!=null)
-        sensorManager.unregisterListener(mySensorEventListener);
+        if (mySensorEventListener != null && sensorManager != null)
+            sensorManager.unregisterListener(mySensorEventListener);
     }
 }
