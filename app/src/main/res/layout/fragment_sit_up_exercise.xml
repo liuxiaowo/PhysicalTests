@@ -59,7 +59,7 @@
                 android:id="@+id/sit_up_ex_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/push_up_ex_prompt"
+                android:text="@string/sit_up_ex_prompt"
                 android:layout_gravity="center_horizontal"
                 />
             <!--俯卧撑计数-->
