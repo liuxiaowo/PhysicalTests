@@ -41,6 +41,51 @@
         android:layout_marginTop="50dp"
         android:background="#f4f1f1"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_shuttle_run"
+        android:orientation="vertical">
+
+        <Chronometer
+            android:id="@+id/shuttle_run_timer"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textSize="60sp"
+            android:textColor="@color/green"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="开始" />
+
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="停止" />
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="重置" />
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 
 </RelativeLayout>
