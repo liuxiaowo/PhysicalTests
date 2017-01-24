@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import com.example.physicaltests.R;
 
 /**
- *俯卧撑-自测
+ *跑步-自由跑
  */
 public class RunningFreeFragment extends Fragment implements View.OnClickListener{
     //返回按钮

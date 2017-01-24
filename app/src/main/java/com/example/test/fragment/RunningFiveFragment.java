@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import com.example.physicaltests.R;
 
 /**
- *俯卧撑-自测
+ *跑步-5000米
  */
 public class RunningFiveFragment extends Fragment implements View.OnClickListener{
     //返回按钮
