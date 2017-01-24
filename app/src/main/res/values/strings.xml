@@ -37,4 +37,9 @@
     <string name="sit_up_ex_prompt">请将手机横向绑在腹部,点击右上角按钮开始</string>
     <!--仰卧起坐考核界面-->
     <string name="sit_up_check_prompt">请将手机横向绑在腹部,点击右上角刷新按钮开始</string>
+
+    <!--仰卧起坐-->
+    <string name="running_title_three">跑步-3000米</string>
+    <string name="running_title_five">跑步-5000米</string>
+    <string name="running_title_free">跑步-自由跑</string>
 </resources>
