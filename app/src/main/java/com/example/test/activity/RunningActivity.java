@@ -1,7 +1,10 @@
 package com.example.test.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.physicaltests.R;
 import com.example.test.fragment.RunningFiveFragment;
@@ -34,11 +38,56 @@ public class RunningActivity extends AppCompatActivity implements View.OnClickLi
 
     public static int isWhoFragment = 1;
 
+    //电话权限
+    private static final int BAIDU_READ_PHONE_STATE =100;
+    //获取位置权限
+    private static final int BAIDU_ACCESS_COARSE_LOCATION = 200;
+    private static final int BAIDU_ACCESS_FINE_LOCATION = 300;
+    //读写SD卡权限
+    private static final int BAIDU_READ_EXTERNAL_STORAGE = 400;
+    private static final int BAIDU_WRITE_EXTERNAL_STORAGE = 500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
         initView();
+        //android 6.0需动态获取权限
+        getPerssion();
+    }
+
+    /*
+   * android6.0动态获取权限
+    */
+    private void getPerssion(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义)
+                requestPermissions( new String[]{ Manifest.permission.READ_PHONE_STATE },BAIDU_READ_PHONE_STATE);
+            }
+            if(checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !=PackageManager.PERMISSION_GRANTED)
+            {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义)
+                requestPermissions( new String[]{ Manifest.permission.ACCESS_COARSE_LOCATION },BAIDU_ACCESS_COARSE_LOCATION);
+            }
+            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED)
+            {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义)
+                requestPermissions( new String[]{ Manifest.permission.ACCESS_FINE_LOCATION },BAIDU_ACCESS_FINE_LOCATION);
+            }
+            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !=PackageManager.PERMISSION_GRANTED)
+            {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义)
+                requestPermissions( new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE },BAIDU_READ_EXTERNAL_STORAGE);
+            }
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) !=PackageManager.PERMISSION_GRANTED)
+            {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义)
+                requestPermissions( new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE },BAIDU_WRITE_EXTERNAL_STORAGE);
+            }
+        }
+
     }
 
     private void initView() {
@@ -169,4 +218,56 @@ public class RunningActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode)
+        {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            //获取电话权限
+            case BAIDU_READ_PHONE_STATE:
+                if(grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getApplicationContext(),"电话权限获取失败",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            //获取定位权限
+            case BAIDU_ACCESS_COARSE_LOCATION:
+                if(grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getApplicationContext(),"定位权限获取失败",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            //获取定位权限
+            case BAIDU_ACCESS_FINE_LOCATION:
+                if(grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getApplicationContext(),"定位权限获取失败",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            //读sd卡权限
+            case BAIDU_READ_EXTERNAL_STORAGE:
+                if(grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getApplicationContext(),"读取SD卡权限获取失败",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case BAIDU_WRITE_EXTERNAL_STORAGE:
+                if(grantResults[0] != PackageManager.PERMISSION_GRANTED)
+                {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getApplicationContext(),"写入SD卡权限获取失败",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
 }

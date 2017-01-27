@@ -19,7 +19,7 @@ import com.example.test.listener.NotifyLister;
 /**
  *跑步-3000米
  */
-public class RunningThreeFragment extends Fragment implements View.OnClickListener{
+public class RunningThreeFragment extends Fragment implements View.OnClickListener {
     //返回按钮
     private ImageButton back;
     //百度定位
@@ -31,16 +31,16 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLocationClient = new LocationClient(getActivity());     //声明LocationClient类
-        mLocationClient.registerLocationListener( myListener );    //注册监听函数
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
         mLocationClient.start();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=1000;
+        int span = 1000;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -59,7 +59,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.fragment_running_three, container, false);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //back btn
-        back = (ImageButton)view.findViewById(R.id.back_running_three);
+        back = (ImageButton) view.findViewById(R.id.back_running_three);
         back.setOnClickListener(this);
         return view;
     }
@@ -71,7 +71,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             //返回按钮
             case R.id.back_running_three:
                 getActivity().finish();
@@ -80,14 +80,15 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
     }
 
     /**
-     *定位提醒
+     * 定位提醒
      */
-    private void SetNotifyLocation(){
+    private void SetNotifyLocation() {
         //位置提醒相关代码
         mNotifyer = new NotifyLister();
-        mNotifyer.SetNotifyLocation(42.03249652949337,113.3129895882556,3000,"gps");//4个参数代表要位置提醒的点的坐标，具体含义依次为：纬度，经度，距离范围，坐标系类型(gcj02,gps,bd09,bd09ll)
+        mNotifyer.SetNotifyLocation(42.03249652949337, 113.3129895882556, 3000, "gps");//4个参数代表要位置提醒的点的坐标，具体含义依次为：纬度，经度，距离范围，坐标系类型(gcj02,gps,bd09,bd09ll)
         mLocationClient.registerNotify(mNotifyer);
         //取消位置提醒
         mLocationClient.removeNotifyEvent(mNotifyer);
     }
+
 }
