@@ -26,7 +26,14 @@
     <!-- SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
 
+    <!--百度地图权限-->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <application
+        android:name="com.example.PTApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
@@ -58,10 +65,14 @@
         <!--百度定位服务-->
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"></service>
 
-        <!--百度定位sdk key值-->
+        <!--百度定位sdk key值(red)-->
+        <!--<meta-data-->
+            <!--android:name="com.baidu.lbsapi.API_KEY"-->
+            <!--android:value="iGqamuTA7d1aKLCuNZygfppGNKmxSXll" />-->
+        <!--百度定位sdk key值(balck)-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="iGqamuTA7d1aKLCuNZygfppGNKmxSXll" />
+            android:value="5DzGxDisApQyd3Ttq1S5c5rapo7uMvfC" />
 
     </application>
 

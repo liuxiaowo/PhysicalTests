@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.MapView;
 import com.example.physicaltests.R;
 import com.example.test.listener.BaiduLocationListener;
 import com.example.test.listener.NotifyLister;
@@ -26,6 +27,8 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new BaiduLocationListener();
     private NotifyLister mNotifyer = null;
+    //百度地图
+    private MapView mMapView = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //back btn
         back = (ImageButton) view.findViewById(R.id.back_running_three);
+        //获取地图控件引用
+        mMapView = (MapView) view.findViewById(R.id.bmapView);
         back.setOnClickListener(this);
         return view;
     }
@@ -89,6 +94,25 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         mLocationClient.registerNotify(mNotifyer);
         //取消位置提醒
         mLocationClient.removeNotifyEvent(mNotifyer);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        mMapView.onDestroy();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
+        mMapView.onResume();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
+        mMapView.onPause();
     }
 
 }
