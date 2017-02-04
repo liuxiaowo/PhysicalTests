@@ -1,34 +1,67 @@
 package com.example.test.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapPoi;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.model.LatLng;
 import com.example.physicaltests.R;
 import com.example.test.listener.BaiduLocationListener;
 import com.example.test.listener.NotifyLister;
+import com.example.test.utils.BaiduMapUtil;
+
+import java.util.ArrayList;
 
 /**
- *跑步-3000米
+ * 跑步-3000米
  */
 public class RunningThreeFragment extends Fragment implements View.OnClickListener {
     //返回按钮
-    private ImageButton back;
+    private ImageButton back, start;
     //百度定位
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new BaiduLocationListener();
     private NotifyLister mNotifyer = null;
     //百度地图
     private MapView mMapView = null;
+    //判断是开始还是暂停
+    private int isStarted = 0;
+    //计数显示View,距离,速度
+    private TextView countView,tvDistance,tvSpeed;
+    //计步count
+    private int runCount = 0;
+    private Handler handler = new Handler();
+    // 放线的坐标
+    private ArrayList<LatLng> pointList = new ArrayList<LatLng>();
+    // 更新统计界面可的数据
+    private Runnable updateDataRunnable;
+    // 管理地图
+    private BaiduMap baiduMap;
+    //倒计时
+    private Chronometer meter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +96,50 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //back btn
         back = (ImageButton) view.findViewById(R.id.back_running_three);
+        start = (ImageButton) view.findViewById(R.id.start_running_three);
+        countView = (TextView) view.findViewById(R.id.run_count);
         //获取地图控件引用
         mMapView = (MapView) view.findViewById(R.id.bmapView);
+        baiduMap = mMapView.getMap();
+        // 找到计时控件
+        meter = (Chronometer) view.findViewById(R.id.chronometer1);
+        // 找显示公里，显示速度的控件
+        tvDistance = (TextView) view.findViewById(R.id.tv_distance);
+        tvSpeed = (TextView) view.findViewById(R.id.tv_recorder_speed);
         back.setOnClickListener(this);
+        start.setOnClickListener(this);
+        //划线
+        baiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latlng) {
+                // 清除地图上的图
+                /**
+                 * baiduMap.clear(); Log.i("定位", latlng.longitude + "," +
+                 * latlng); MarkerOptions options = new MarkerOptions();
+                 * options.position(latlng);
+                 * options.icon(BitmapDescriptorFactory
+                 * .fromResource(R.drawable.icon_marka));
+                 * baiduMap.addOverlay(options);
+                 */
+                // 用户在跑步，跑的时候，得坐标，放到list
+                // 模拟得到坐标
+                pointList.add(latlng);
+                // 画线
+                if (pointList.size() >= 2) {
+                    PolylineOptions polylineOptions = new PolylineOptions();
+                    // 设置线的坐标
+                    polylineOptions.points(pointList);
+                    baiduMap.clear();
+                    baiduMap.addOverlay(polylineOptions);
+                }
+            }
+
+            @Override
+            public boolean onMapPoiClick(MapPoi arg0) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
         return view;
     }
 
@@ -80,6 +154,34 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
             //返回按钮
             case R.id.back_running_three:
                 getActivity().finish();
+                break;
+            //跑步开始/暂停
+            case R.id.start_running_three:
+                try {
+                    //开始状态
+                    if (isStarted % 2 == 0) {
+                        start.setBackgroundResource(R.drawable.run_stop);
+                        // 更新count
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                runCount++;
+                                countView.setText(runCount+"");
+                                showReocorder();
+                            }
+                        }, 1000);
+                    } else { //暂停状态
+                        start.setBackgroundResource(R.drawable.run_start);
+                        pointList.clear();
+                        baiduMap.clear();
+                        //前面执行handler.post(runnable)
+                        //必须移出
+                        handler.removeCallbacks(updateDataRunnable);
+                    }
+                    isStarted++;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -102,12 +204,14 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
     }
+
     @Override
     public void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -115,4 +219,121 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         mMapView.onPause();
     }
 
+    // 2.3 写实现类
+    class BaiduBdlocationListener implements BDLocationListener {
+
+        // 百度地图框架定位成功后，回调onReceiveLocation
+        @Override
+        public void onReceiveLocation(BDLocation bDLocation) {
+            // 得经度
+            double longitude = bDLocation.getLongitude();
+            // 得纬度
+            double latitdue = bDLocation.getLatitude();
+
+            Log.i("定位", "经度=" + longitude + ",纬度=" + latitdue);
+            // 在原生模拟器上定位不成功，得到的是4.9E-324
+            // 模拟一个位置
+            if (latitdue == 4.9E-324) {
+                // 没有得到坐标
+                latitdue = 39.917263;
+                longitude = 116.392151;
+            }
+
+            // 移动地图
+            // LatLng：放的是坐标
+            LatLng currentLocation = new LatLng(latitdue, longitude);
+            // 17:地图显示的级别(4-17)
+            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory
+                    .newLatLngZoom(currentLocation, 15);
+            // 以动画的方式移动
+            baiduMap.animateMapStatus(mapStatusUpdate);
+
+            // 显示图片
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(currentLocation);
+            // 创建一个能在地图上显示的图
+            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory
+                    .fromResource(R.drawable.icon);
+            markerOptions.icon(bitmapDescriptor);
+            baiduMap.addOverlay(markerOptions);
+        }
+
+    }
+
+    public void showReocorder() {
+        // 开始计时
+        meter.start();
+        // 从那个时候开始
+        meter.setBase(SystemClock.elapsedRealtime());
+        tvDistance.setText("0.00");
+        tvSpeed.setText("0.00");
+
+        updateDataRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Log.i("sportFragment", "run");
+                    if (pointList.size() >= 2) {
+
+                        // 更新公里
+                        double distance = 0;
+                        // list[0] 112,39
+                        // list[1] 113,39
+                        // list[2] 114,39
+                        for (int i = 0; i < pointList.size() - 1; i++) {
+                            double lon1 = pointList.get(i).longitude;
+                            double lat1 = pointList.get(i).latitude;
+                            double lon2 = pointList.get(i + 1).longitude;
+                            double lat2 = pointList.get(i + 1).latitude;
+
+                            // BaiduMapUtil.GetDistance 计算出的结果不是公里，是米
+                            distance = distance
+                                    + BaiduMapUtil.GetDistance(lon1, lat1,
+                                    lon2, lat2);
+                        }
+                        // 把米转成公里
+                        distance = distance / 1000;
+                        String strDistance = String.valueOf(distance);
+                        // 1.068766
+                        if (strDistance.contains(".")) {
+                            int pointIndex = strDistance.indexOf(".");
+                            strDistance = strDistance.substring(0,
+                                    pointIndex + 3);
+                        }
+                        tvDistance.setText(strDistance);
+                        // 得时间
+                        // 01:32
+                        // [0] 01
+                        // [1] 32
+                        String showTime = meter.getText().toString();
+                        double minute = 0, second = 0, hour = 0;
+                        String strMinute = showTime.split(":")[0];
+                        minute = Double.parseDouble(strMinute);
+
+                        second = Double.parseDouble(showTime.split(":")[1]);
+
+                        hour = minute * 60 + second / 60 / 60;
+                        // 更新速度
+                        double speed = distance / hour;
+                        String strSpeed = String.valueOf(speed);
+                        if (strSpeed.contains(".")) {
+                            int pointIndex = strSpeed.indexOf(".");
+                            strSpeed = strSpeed.substring(0, pointIndex + 3);
+                            tvSpeed.setText(strSpeed);
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    // 再次调用run
+                    handler.postDelayed(this, 2000);
+                }
+            }
+        };
+        // 让updateDataRunnable运行
+        handler.post(updateDataRunnable);
+    }
 }
+

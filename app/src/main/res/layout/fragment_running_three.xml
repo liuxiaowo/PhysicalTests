@@ -29,6 +29,15 @@
                 android:text="@string/running_title_three"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/start_running_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/run_start" />
+
         </RelativeLayout>
 
         <View
@@ -43,11 +52,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/line_running_test"
             android:orientation="vertical">
+
             <com.baidu.mapapi.map.MapView
                 android:id="@+id/bmapView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:clickable="true" />
+
+            <TextView
+                android:id="@+id/run_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/orange"
+                android:textSize="20sp" />
+
+            <include
+                layout="@layout/fragment_sport_recorder" />
+
         </LinearLayout>
 
     </RelativeLayout>
