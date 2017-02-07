@@ -59,14 +59,6 @@
                 android:layout_height="200dp"
                 android:clickable="true" />
 
-            <TextView
-                android:id="@+id/run_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
-
             <include
                 layout="@layout/fragment_sport_recorder" />
 

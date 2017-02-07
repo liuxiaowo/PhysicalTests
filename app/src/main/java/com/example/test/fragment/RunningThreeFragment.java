@@ -28,8 +28,11 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.trace.LBSTraceClient;
+import com.baidu.trace.OnStartTraceListener;
+import com.baidu.trace.OnStopTraceListener;
+import com.baidu.trace.Trace;
 import com.example.physicaltests.R;
-import com.example.test.listener.BaiduLocationListener;
 import com.example.test.listener.NotifyLister;
 import com.example.test.utils.BaiduMapUtil;
 
@@ -50,9 +53,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
     //判断是开始还是暂停
     private int isStarted = 0;
     //计数显示View,距离,速度
-    private TextView countView,tvDistance,tvSpeed;
-    //计步count
-    private int runCount = 0;
+    private TextView tvDistance, tvSpeed;
     private Handler handler = new Handler();
     // 放线的坐标
     private ArrayList<LatLng> pointList = new ArrayList<LatLng>();
@@ -63,6 +64,18 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
     //倒计时
     private Chronometer meter;
 
+
+    //实例化轨迹服务客户端
+    private LBSTraceClient client = new LBSTraceClient(getActivity());
+    //鹰眼服务ID
+    private long serviceId  = 133586;
+    //entity标识
+    private String entityName = "run";
+    //轨迹服务类型（0 : 不上传位置数据，也不接收报警信息； 1 : 不上传位置数据，但接收报警信息；2 : 上传位置数据，且接收报警信息）
+    private int  traceType = 2;
+    //实例化轨迹服务
+    private Trace trace = new Trace(getActivity(), serviceId, entityName, traceType);
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +83,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
         mLocationClient.start();
+
     }
 
     private void initLocation() {
@@ -97,7 +111,6 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
         //back btn
         back = (ImageButton) view.findViewById(R.id.back_running_three);
         start = (ImageButton) view.findViewById(R.id.start_running_three);
-        countView = (TextView) view.findViewById(R.id.run_count);
         //获取地图控件引用
         mMapView = (MapView) view.findViewById(R.id.bmapView);
         baiduMap = mMapView.getMap();
@@ -161,22 +174,45 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
                     //开始状态
                     if (isStarted % 2 == 0) {
                         start.setBackgroundResource(R.drawable.run_stop);
-                        // 更新count
-                        handler.postDelayed(new Runnable() {
+//                        meter.stop();
+//                        showReocorder();
+
+                        //实例化开启轨迹服务回调接口
+                        OnStartTraceListener startTraceListener = new OnStartTraceListener() {
+                            //开启轨迹服务回调接口（arg0 : 消息编码，arg1 : 消息内容，详情查看类参考）
                             @Override
-                            public void run() {
-                                runCount++;
-                                countView.setText(runCount+"");
-                                showReocorder();
+                            public void onTraceCallback(int arg0, String arg1) {
                             }
-                        }, 1000);
+                            //轨迹服务推送接口（用于接收服务端推送消息，arg0 : 消息类型，arg1 : 消息内容，详情查看类参考）
+                            @Override
+                            public void onTracePushCallback(byte arg0, String arg1) {
+                            }
+                        };
+                        //开启轨迹服务
+                        client.startTrace(trace, startTraceListener);
+
                     } else { //暂停状态
                         start.setBackgroundResource(R.drawable.run_start);
-                        pointList.clear();
-                        baiduMap.clear();
-                        //前面执行handler.post(runnable)
-                        //必须移出
-                        handler.removeCallbacks(updateDataRunnable);
+//                        pointList.clear();
+//                        baiduMap.clear();
+//                        //前面执行handler.post(runnable)
+//                        //必须移出
+//                        handler.removeCallbacks(updateDataRunnable);
+
+                        //实例化停止轨迹服务回调接口
+                        OnStopTraceListener stopTraceListener = new OnStopTraceListener(){
+                            // 轨迹服务停止成功
+                            @Override
+                            public void onStopTraceSuccess() {
+                            }
+                            // 轨迹服务停止失败（arg0 : 错误编码，arg1 : 消息内容，详情查看类参考）
+                            @Override
+                            public void onStopTraceFailed(int arg0, String arg1) {
+                            }
+                        };
+                        //停止轨迹服务
+                        client.stopTrace(trace,stopTraceListener);
+
                     }
                     isStarted++;
                 } catch (Exception e) {
@@ -220,7 +256,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
     }
 
     // 2.3 写实现类
-    class BaiduBdlocationListener implements BDLocationListener {
+    class BaiduLocationListener implements BDLocationListener {
 
         // 百度地图框架定位成功后，回调onReceiveLocation
         @Override
@@ -244,7 +280,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
             LatLng currentLocation = new LatLng(latitdue, longitude);
             // 17:地图显示的级别(4-17)
             MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory
-                    .newLatLngZoom(currentLocation, 15);
+                    .newLatLngZoom(currentLocation, 20);
             // 以动画的方式移动
             baiduMap.animateMapStatus(mapStatusUpdate);
 
@@ -253,7 +289,7 @@ public class RunningThreeFragment extends Fragment implements View.OnClickListen
             markerOptions.position(currentLocation);
             // 创建一个能在地图上显示的图
             BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory
-                    .fromResource(R.drawable.icon);
+                    .fromResource(R.drawable.location);
             markerOptions.icon(bitmapDescriptor);
             baiduMap.addOverlay(markerOptions);
         }

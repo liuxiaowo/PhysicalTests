@@ -44,4 +44,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
     compile files('libs/xcl-charts.jar')
+    compile files('libs/BaiduTraceSDK_v2_1_15.jar')
+    compile files('libs/gson-2.2.1.jar')
 }

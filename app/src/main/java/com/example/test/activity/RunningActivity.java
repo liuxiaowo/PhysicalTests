@@ -124,7 +124,7 @@ public class RunningActivity extends AppCompatActivity implements View.OnClickLi
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.running_framelayout, RunningThreeFragment.newInstance());
+        transaction.replace(R.id.running_framelayout, RunningFreeFragment.newInstance());
         transaction.commit();
     }
 
