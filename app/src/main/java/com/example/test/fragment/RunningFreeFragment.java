@@ -27,8 +27,10 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.trace.LBSTraceClient;
+import com.baidu.trace.LocationMode;
 import com.baidu.trace.OnEntityListener;
 import com.baidu.trace.OnStartTraceListener;
+import com.baidu.trace.OnStopTraceListener;
 import com.baidu.trace.Trace;
 import com.example.physicaltests.R;
 import com.example.test.data.RealtimeTrackData;
@@ -41,15 +43,16 @@ import java.util.List;
  *跑步-自由跑
  */
 public class RunningFreeFragment extends Fragment implements View.OnClickListener{
-    //返回按钮
-    private ImageButton back;
+    //返回按钮,开始按钮
+    private ImageButton back,start;
 
-    int gatherInterval = 3;  //位置采集周期 (s)
-    int packInterval = 10;  //打包周期 (s)
+    int gatherInterval = 2;  //位置采集周期 (s)
+    int packInterval = 2;  //打包周期 (s)
     String entityName = null;  // entity标识
     long serviceId = 133586;// 鹰眼服务ID
     int traceType = 2;  //轨迹服务类型
     private static OnStartTraceListener startTraceListener = null;  //开启轨迹服务监听器
+    private static OnStopTraceListener stopTraceListener = null;  //停止轨迹服务监听器
 
     private static MapView mapView = null;
     private static BaiduMap baiduMap = null;
@@ -64,6 +67,8 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
 
     private Trace trace;  // 实例化轨迹服务
     private LBSTraceClient client;  // 实例化轨迹服务客户端
+    //开始、暂停按钮切换
+    private int isStarted = 1;
 
     @Nullable
     @Override
@@ -73,17 +78,21 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
         //back btn
         back = (ImageButton)view.findViewById(R.id.back_running_free);
         mapView = (MapView)view.findViewById(R.id.run_free_mapView);
+        start = (ImageButton)view.findViewById(R.id.run_free_start);
         baiduMap = mapView.getMap();
         mapView.showZoomControls(false);
         entityName = getImei(getActivity());  //手机Imei值的获取，用来充当实体名
         client = new LBSTraceClient(getActivity());  //实例化轨迹服务客户端
         trace = new Trace(getActivity(), serviceId, entityName, traceType);  //实例化轨迹服务
         client.setInterval(gatherInterval, packInterval);  //设置位置采集和打包周期
+        // 设置定位模式
+        client. setLocationMode(LocationMode.High_Accuracy);
 
         initOnEntityListener();
         initOnStartTraceListener();
         client.startTrace(trace, startTraceListener);  // 开启轨迹服务
         back.setOnClickListener(this);
+        start.setOnClickListener(this);
         return view;
     }
 
@@ -98,6 +107,19 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
             //返回按钮
             case R.id.back_running_free:
                 getActivity().finish();
+                break;
+            case R.id.run_free_start:
+                //开始状态
+                if (isStarted % 2 == 0) {
+                    start.setBackgroundResource(R.drawable.run_stop);
+                    pointList.clear();
+                    baiduMap.clear();
+                    client.startTrace(trace, startTraceListener);  // 开启轨迹服务
+                }else{
+                    start.setBackgroundResource(R.drawable.run_start);
+                    client.stopTrace(trace,stopTraceListener); //结束轨迹服务
+                }
+                isStarted++;
                 break;
         }
     }
@@ -135,7 +157,7 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
 
 
 
-    /** 追踪开始 */
+    /** 追踪开始或结束 */
     private void initOnStartTraceListener() {
 
         // 实例化开启轨迹服务回调接口
@@ -156,7 +178,19 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
             }
         };
 
+        //轨迹结束
+        stopTraceListener = new OnStopTraceListener() {
+            @Override
+            public void onStopTraceSuccess() {
+                //停止刷新
+                startRefreshThread(false);
+            }
 
+            @Override
+            public void onStopTraceFailed(int i, String s) {
+                Log.i("TAG", "onStopTraceFailed=" + s);
+            }
+        };
 
     }
 
@@ -250,7 +284,7 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
         overlay = new MarkerOptions().position(point)
                 .icon(realtimeBitmap).zIndex(9).draggable(true);
 
-        if(pointList.size() >= 2  && pointList.size() <= 1000){
+        if(pointList.size() >= 2){
             polyline = new PolylineOptions().width(10).color(Color.RED).points(pointList);
         }
 
