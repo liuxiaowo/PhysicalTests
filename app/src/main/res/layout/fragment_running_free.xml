@@ -191,7 +191,8 @@
                     card:cardBackgroundColor="@color/orange"
                     card:cardCornerRadius="40dp"
                     card:cardElevation="2dp"
-                    card:cardMaxElevation="@dimen/cardview_default_elevation">
+                    card:cardMaxElevation="@dimen/cardview_default_elevation"
+                    android:id="@+id/run_free_finish">
 
                     <TextView
                         android:layout_width="wrap_content"

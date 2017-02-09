@@ -79,8 +79,8 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
     private int isStarted = 1;
     //计时
     private Chronometer timer;
-    //速度,距离
-    private TextView speed,distanceView;
+    //速度,距离,完成
+    private TextView speed,distanceView,finish;
     /**
      * Track监听器
      */
@@ -100,6 +100,7 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
         timer = (Chronometer)view.findViewById(R.id.run_free_timer);
         speed = (TextView) view.findViewById(R.id.run_free_speed);
         distanceView = (TextView) view.findViewById(R.id.run_free_distance);
+        finish = (TextView) view.findViewById(R.id.run_free_finish);
         baiduMap = mapView.getMap();
         mapView.showZoomControls(false);
         entityName = getImei(getActivity());  //手机Imei值的获取，用来充当实体名
@@ -120,6 +121,7 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
 
         back.setOnClickListener(this);
         start.setOnClickListener(this);
+        finish.setOnClickListener(this);
         return view;
     }
 
@@ -151,6 +153,10 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
                     timer.stop();
                 }
                 isStarted++;
+                break;
+            case R.id.run_free_finish:
+                timer.stop();
+                client.stopTrace(trace,stopTraceListener); //结束轨迹服务
                 break;
         }
     }
