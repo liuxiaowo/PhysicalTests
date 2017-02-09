@@ -50,7 +50,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -59,8 +59,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 登录 -->
-        <activity android:name=".LoginActivity" />
+        <!-- 主界面 -->
+        <activity android:name=".MainActivity" />
         <!-- 体型测试 -->
         <activity android:name="com.example.test.activity.ShapeActivity" />
         <!-- 俯卧撑测试 -->
