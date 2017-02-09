@@ -17,6 +17,7 @@ public class RealtimeTrackData {
     public String message; // 响应信息,对status的中文描述
 
     public class Entities {
+        public String entity_name; //名称
         public String create_time; // 创建时间 格式化时间 该时间为服务端时间
         public String modify_time; // 修改时间
         public RealtimePoint realtime_point; // 实时轨迹信息
@@ -44,12 +45,28 @@ public class RealtimeTrackData {
         public void setRealtime_point(RealtimePoint realtime_point) {
             this.realtime_point = realtime_point;
         }
+        public String getEntity_name() {
+            return entity_name;
+        }
+
+        public void setEntity_name(String entity_name) {
+            this.entity_name = entity_name;
+        }
 
     }
 
     public class RealtimePoint {
         public List<Double> location;// 经纬度 Array 百度加密坐标
         public String loc_time;// 该track实时点的上传时间 UNIX时间戳 该时间为用户上传的时间
+        public double speed;//速度
+
+        public void setSpeed(double speed) {
+            this.speed = speed;
+        }
+
+        public double getSpeed() {
+            return speed;
+        }
 
         public List<Double> getLocation() {
             return location;

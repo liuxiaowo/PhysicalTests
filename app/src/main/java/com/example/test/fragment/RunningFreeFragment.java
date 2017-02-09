@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -31,13 +33,19 @@ import com.baidu.trace.LocationMode;
 import com.baidu.trace.OnEntityListener;
 import com.baidu.trace.OnStartTraceListener;
 import com.baidu.trace.OnStopTraceListener;
+import com.baidu.trace.OnTrackListener;
 import com.baidu.trace.Trace;
 import com.example.physicaltests.R;
 import com.example.test.data.RealtimeTrackData;
 import com.example.test.service.GsonService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *跑步-自由跑
@@ -69,6 +77,16 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
     private LBSTraceClient client;  // 实例化轨迹服务客户端
     //开始、暂停按钮切换
     private int isStarted = 1;
+    //计时
+    private Chronometer timer;
+    //速度,距离
+    private TextView speed,distanceView;
+    /**
+     * Track监听器
+     */
+    protected static OnTrackListener trackListener = null;
+    //开始时间
+    private int startTime = 0;
 
     @Nullable
     @Override
@@ -79,6 +97,9 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
         back = (ImageButton)view.findViewById(R.id.back_running_free);
         mapView = (MapView)view.findViewById(R.id.run_free_mapView);
         start = (ImageButton)view.findViewById(R.id.run_free_start);
+        timer = (Chronometer)view.findViewById(R.id.run_free_timer);
+        speed = (TextView) view.findViewById(R.id.run_free_speed);
+        distanceView = (TextView) view.findViewById(R.id.run_free_distance);
         baiduMap = mapView.getMap();
         mapView.showZoomControls(false);
         entityName = getImei(getActivity());  //手机Imei值的获取，用来充当实体名
@@ -90,7 +111,13 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
 
         initOnEntityListener();
         initOnStartTraceListener();
+
         client.startTrace(trace, startTraceListener);  // 开启轨迹服务
+        //计时开始
+        timer.start();
+        //开始时间
+        startTime = (int)(System.currentTimeMillis() / 1000);
+
         back.setOnClickListener(this);
         start.setOnClickListener(this);
         return view;
@@ -115,9 +142,13 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
                     pointList.clear();
                     baiduMap.clear();
                     client.startTrace(trace, startTraceListener);  // 开启轨迹服务
+                    //计时开始
+                    timer.start();
                 }else{
                     start.setBackgroundResource(R.drawable.run_start);
                     client.stopTrace(trace,stopTraceListener); //结束轨迹服务
+                    //计时暂停
+                    timer.stop();
                 }
                 isStarted++;
                 break;
@@ -150,6 +181,8 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
                  * 查询实体集合回调函数，此时调用实时轨迹方法
                  */
                 showRealtimeTrack(arg0);
+                //实时查询距离
+                queryDistance(1,null,arg0);
             }
 
         };
@@ -190,6 +223,41 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
             public void onStopTraceFailed(int i, String s) {
                 Log.i("TAG", "onStopTraceFailed=" + s);
             }
+        };
+
+        trackListener = new OnTrackListener() {
+
+            // 请求失败回调接口
+            @Override
+            public void onRequestFailedCallback(String arg0) {
+                // TODO Auto-generated method stub
+                Log.i("TAG", "track请求失败回调接口消息 :"+ arg0);
+            }
+
+            @Override
+            public void onQueryDistanceCallback(String arg0) {
+                Log.i("TAG", "queryDistance回调消息 : "+ arg0);
+                // TODO Auto-generated method stub
+                try {
+                    JSONObject dataJson = new JSONObject(arg0);
+                    if (null != dataJson && dataJson.has("status") && dataJson.getInt("status") == 0) {
+                        double distance = (dataJson.getDouble("distance")/1000);
+                        DecimalFormat df = new DecimalFormat("#.00");
+                        distanceView.setText(df.format(distance));
+                    }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    Log.i("TAG", "queryDistance回调消息 : "+ arg0);
+                }
+            }
+
+            @Override
+            public Map<String, String> onTrackAttrCallback() {
+                // TODO Auto-generated method stub
+                System.out.println("onTrackAttrCallback");
+                return null;
+            }
+
         };
 
     }
@@ -257,7 +325,8 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
         RealtimeTrackData realtimeTrackData = GsonService.parseJson(realtimeTrack, RealtimeTrackData.class);
 
         if(realtimeTrackData != null && realtimeTrackData.getStatus() ==0){
-
+            //速度
+            speed.setText(realtimeTrackData.getEntities().get(0).getRealtime_point().getSpeed()+"");
             LatLng latLng = realtimeTrackData.getRealtimePoint();
 
             if(latLng != null){
@@ -270,6 +339,25 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
 
         }
 
+    }
+
+    // 查询里程
+    private void queryDistance(int processed, String processOption,String realtimeTrack) {
+        //数据以JSON形式存取
+        RealtimeTrackData realtimeTrackData = GsonService.parseJson(realtimeTrack, RealtimeTrackData.class);
+
+        // entity标识
+        String entityName = realtimeTrackData.getEntities().get(0).getEntity_name();
+
+        // 是否返回纠偏后轨迹（0 : 否，1 : 是）
+        int isProcessed = processed;
+
+        // 里程补充
+        String supplementMode = "run";
+        String endTime = realtimeTrackData.getEntities().get(0).getModify_time();
+
+        client.queryDistance(serviceId, entityName, isProcessed, processOption,
+                supplementMode, startTime, Integer.decode(endTime), trackListener);
     }
 
     /**
