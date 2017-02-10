@@ -3,6 +3,7 @@ package com.example.test.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -162,4 +163,20 @@ public class ShapeActivity extends AppCompatActivity implements View.OnClickList
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
+
+    /**
+     * 按返回键退出activity
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK ){
+            finish();
+        }
+        return false;
+    }
+
 }

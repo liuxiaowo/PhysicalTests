@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -69,4 +70,19 @@ public class ShuttleRunActivity extends AppCompatActivity implements View.OnClic
         end.setOnClickListener(this);
         reset.setOnClickListener(this);
     }
+    /**
+     * 按返回键退出activity
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK ){
+            finish();
+        }
+        return false;
+    }
+
 }
