@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,14 +80,16 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
     private int isStarted = 1;
     //计时
     private Chronometer timer;
-    //速度,距离,完成
-    private TextView speed,distanceView,finish;
+    //速度,距离
+    private TextView speed,distanceView;
     /**
      * Track监听器
      */
     protected static OnTrackListener trackListener = null;
     //开始时间
     private int startTime = 0;
+    //完成
+    private CardView finish;
 
     @Nullable
     @Override
@@ -100,7 +103,7 @@ public class RunningFreeFragment extends Fragment implements View.OnClickListene
         timer = (Chronometer)view.findViewById(R.id.run_free_timer);
         speed = (TextView) view.findViewById(R.id.run_free_speed);
         distanceView = (TextView) view.findViewById(R.id.run_free_distance);
-        finish = (TextView) view.findViewById(R.id.run_free_finish);
+        finish = (CardView) view.findViewById(R.id.run_free_finish);
         baiduMap = mapView.getMap();
         mapView.showZoomControls(false);
         entityName = getImei(getActivity());  //手机Imei值的获取，用来充当实体名

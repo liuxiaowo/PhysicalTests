@@ -39,13 +39,13 @@ public class RunningActivity extends AppCompatActivity implements View.OnClickLi
     public static int isWhoFragment = 1;
 
     //电话权限
-    private static final int BAIDU_READ_PHONE_STATE =100;
+    private static final int BAIDU_READ_PHONE_STATE =1;
     //获取位置权限
-    private static final int BAIDU_ACCESS_COARSE_LOCATION = 200;
-    private static final int BAIDU_ACCESS_FINE_LOCATION = 300;
+    private static final int BAIDU_ACCESS_COARSE_LOCATION = 2;
+    private static final int BAIDU_ACCESS_FINE_LOCATION = 3;
     //读写SD卡权限
-    private static final int BAIDU_READ_EXTERNAL_STORAGE = 400;
-    private static final int BAIDU_WRITE_EXTERNAL_STORAGE = 500;
+    private static final int BAIDU_READ_EXTERNAL_STORAGE = 4;
+    private static final int BAIDU_WRITE_EXTERNAL_STORAGE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,7 @@ public class RunningActivity extends AppCompatActivity implements View.OnClickLi
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.running_framelayout, RunningFreeFragment.newInstance());
+        transaction.replace(R.id.running_framelayout, RunningThreeFragment.newInstance());
         transaction.commit();
     }
 
