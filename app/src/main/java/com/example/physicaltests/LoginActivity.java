@@ -2,6 +2,7 @@ package com.example.physicaltests;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         requestWindowFeature(1);
         setContentView(R.layout.activity_login);
         initView();
+        showLastLoginInfo();
     }
 
     private void initView(){
@@ -52,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-
     }
 
     @Override
@@ -107,5 +108,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(getApplicationContext(), name.getText() + "登录成功！", Toast.LENGTH_LONG).show();
         Intent in = new Intent(this,MainActivity.class);
         startActivity(in);
+        SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("name",name.getText()+"");
+        editor.putString("sex",sex_content);
+        editor.putString("age",age.getText()+"");
+        editor.commit();
+    }
+    /**
+     * 显示最近一次登录信息
+     */
+    private void showLastLoginInfo(){
+        SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
+        String name2 = pref.getString("name","");
+        String sex2 = pref.getString("sex","");
+        String age2 = pref.getString("age","");
+        if(name2!=null&&sex2!=null&&age2!=null){
+            name.setText(name2);
+            if(sex2.equals("boy")){
+                boy.setChecked(true);
+            }else{
+                gril.setChecked(true);
+            }
+            age.setText(age2);
+        }
     }
 }
