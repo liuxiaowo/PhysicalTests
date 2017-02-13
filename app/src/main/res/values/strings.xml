@@ -42,4 +42,7 @@
     <string name="running_title_three">跑步-3000米</string>
     <string name="running_title_five">跑步-5000米</string>
     <string name="running_title_free">跑步-自由跑</string>
+
+    <!--引导页-->
+    <string name="entry">立即体验</string>
 </resources>
