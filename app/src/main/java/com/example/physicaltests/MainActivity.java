@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +20,7 @@ import com.example.fragments.CheckFragment;
 import com.example.fragments.StandardFragment;
 import com.example.fragments.TestFragment;
 import com.example.fragments.TimerFragment;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 
@@ -176,13 +178,12 @@ public class MainActivity extends AppCompatActivity implements  BottomNavigation
         menu.setMode(SlidingMenu.LEFT);
         // 设置触摸屏幕的模式
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-       /* menu.setShadowDrawable(R.drawable.tu);*/
-
-        // 设置滑动菜单视图的宽度
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        WindowManager manage = getWindowManager();
+        Display display = manage.getDefaultDisplay();
+        int screenWidth = display.getWidth();
+        menu.setBehindOffset(screenWidth / 4);// SlidingMenu划出时主页面显示的剩余宽度
         // 设置渐入渐出效果的值
-        menu.setFadeDegree(0.35f);
+        menu.setFadeDegree(0f);
         /**
          * SLIDING_WINDOW will include the Title/ActionBar in the content
          * section of the SlidingMenu, while SLIDING_CONTENT does not.
