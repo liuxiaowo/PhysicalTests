@@ -1,12 +1,14 @@
 package com.example.physicaltests;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,32 +38,34 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
-        Log.e("xiawo","1");
+
+        //顶部栏背景颜色
+        Window window = getWindow();
+        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //设置状态栏颜色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.blue));
+        }
 
         views = new ArrayList<View>();
-        Log.e("xiawo","2");
 
         // 初始化引导页视图列表
         for (int i = 0; i < pics.length; i++) {
-            Log.e("xiawo","3");
             View view = LayoutInflater.from(this).inflate(pics[i], null);
             if (i == pics.length - 1) {
-                Log.e("xiawo","4");
                 startBtn = (Button) view.findViewById(R.id.btn_enter);
                 startBtn.setTag("enter");
                 startBtn.setOnClickListener(this);
             }
             views.add(view);
-            Log.e("xiawo","5");
         }
-        Log.e("xiawo","6");
         vp = (ViewPager) findViewById(R.id.vp_guide);
-        Log.e("xiawo","7");
         adapter = new GuideViewPagerAdapter(views);
-        Log.e("xiawo","8");
         vp.setAdapter(adapter);
         vp.addOnPageChangeListener(new PageChangeListener());
-        Log.e("xiawo","9");
 
         initDots();
     }
@@ -74,11 +78,9 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("xiawo","12");
         // 如果切换到后台，就设置下次不进入功能引导页
         SharedPreferencesUtil.putBoolean(GuideActivity.this, SharedPreferencesUtil.FIRST_OPEN, false);
         finish();
-        Log.e("xiawo","13");
     }
 
     @Override
@@ -92,28 +94,19 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initDots() {
-        Log.e("xiawo","10");
         LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
-        Log.e("xiawo","21");
         dots = new ImageView[pics.length];
-        Log.e("xiawo","22");
 
         // 循环取得小点图片
         for (int i = 0; i < pics.length; i++) {
-            Log.e("xiawo","23");
             // 得到一个LinearLayout下面的每一个子元素
             dots[i] = (ImageView) ll.getChildAt(i);
             dots[i].setEnabled(false);// 都设为灰色
             dots[i].setOnClickListener(this);
             dots[i].setTag(i);// 设置位置tag，方便取出与当前位置对应
-            Log.e("xiawo","24");
         }
-        Log.e("xiawo","25");
         currentIndex = 0;
-        Log.e("xiawo","26");
         dots[currentIndex].setEnabled(true); // 设置为白色，即选中状态
-
-        Log.e("xiawo","11");
 
     }
 
@@ -135,7 +128,6 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
      * @param position
      */
     private void setCurDot(int position) {
-        Log.e("xiawo","16");
         if (position < 0 || position > pics.length || currentIndex == position) {
             return;
         }
@@ -146,16 +138,13 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Log.e("xiawo","13");
         if (v.getTag().equals("enter")) {
             enterMainActivity();
             return;
         }
-        Log.e("xiawo","14");
         int position = (Integer) v.getTag();
         setCurView(position);
         setCurDot(position);
-        Log.e("xiawo","15");
     }
 
 
